@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { STORAGE_KEYS } from '../constants/storage-keys.constant';
@@ -9,6 +9,7 @@ import { LoginRequest } from '../interfaces/login-request.interface';
 import { RegisterRequest } from '../interfaces/register-request.interface';
 import { AuthResponse } from '../interfaces/auth-response.interface';
 import { RefreshRequest } from '../interfaces/refresh-request.interface';
+import { MeResponse } from '../interfaces/me-response.interface';
 import { User } from '../interfaces/user.interface';
 import { Role } from '../enums/role.enum';
 
@@ -41,7 +42,6 @@ export class AuthService {
     return this.http.post<void>(`${this.apiUrl}/logout`, body).pipe(
       tap(() => this.clearSession()),
       catchError((error) => {
-        // Aunque falle en el backend, limpiamos la sesión localmente.
         this.clearSession();
         return this.handleError(error);
       })
@@ -57,8 +57,12 @@ export class AuthService {
     );
   }
 
+  // GET /api/auth/me devuelve { user: {...} }, no el User directo.
+  // Se desenvuelve aquí con map() para que el resto de la app siga
+  // trabajando con un User plano, sin conocer el detalle del wrapper.
   getProfile(): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/me`).pipe(
+    return this.http.get<MeResponse>(`${this.apiUrl}/me`).pipe(
+      map((response) => response.user),
       catchError((error) => this.handleError(error))
     );
   }

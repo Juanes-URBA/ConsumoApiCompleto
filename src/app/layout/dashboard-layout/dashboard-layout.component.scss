@@ -1,3 +1,19 @@
+.dashboard-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  &__body {
+    flex: 1;
+    display: flex;
+  }
+
+  &__content {
+    flex: 1;
+    padding: 24px;
+    overflow-x: hidden;
+  }
+
   &__overlay {
     display: none;
 
@@ -9,3 +25,4 @@
       z-index: 90;
     }
   }
+}

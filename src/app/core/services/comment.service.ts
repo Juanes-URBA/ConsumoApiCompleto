@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { Comment } from '../interfaces/comment.interface';
 import { CreateCommentRequest } from '../interfaces/create-comment-request.interface';
+import { unwrapData } from '../../shared/utils/unwrap-response.util';
 
 @Injectable({
   providedIn: 'root'
@@ -17,14 +18,20 @@ export class CommentService {
 
   getComments(ticketId: string): Observable<Comment[]> {
     return this.http
-      .get<Comment[]>(`${this.apiUrl}/${ticketId}/comments`)
-      .pipe(catchError((error) => this.handleError(error)));
+      .get<Comment[] | { data: Comment[] }>(`${this.apiUrl}/${ticketId}/comments`)
+      .pipe(
+        map((response) => unwrapData(response)),
+        catchError((error) => this.handleError(error))
+      );
   }
 
   addComment(ticketId: string, data: CreateCommentRequest): Observable<Comment> {
     return this.http
-      .post<Comment>(`${this.apiUrl}/${ticketId}/comments`, data)
-      .pipe(catchError((error) => this.handleError(error)));
+      .post<Comment | { data: Comment }>(`${this.apiUrl}/${ticketId}/comments`, data)
+      .pipe(
+        map((response) => unwrapData(response)),
+        catchError((error) => this.handleError(error))
+      );
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {

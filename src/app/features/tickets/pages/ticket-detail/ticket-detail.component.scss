@@ -61,6 +61,22 @@
     color: #1f2937;
     margin: 0 0 12px;
   }
+
+  &__edit-btn {
+    padding: 6px 14px;
+    border: 1px solid #2563eb;
+    color: #2563eb;
+    background: transparent;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 8px;
+
+    &:hover {
+      background: #eff6ff;
+    }
+  }
 }
 
 .meta-item {
@@ -87,19 +103,3 @@
   font-size: 0.85rem;
   padding: 8px 0;
 }
-
-  &__edit-btn {
-    padding: 6px 14px;
-    border: 1px solid #2563eb;
-    color: #2563eb;
-    background: transparent;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
-    margin-left: 8px;
-
-    &:hover {
-      background: #eff6ff;
-    }
-  }

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { User } from '../interfaces/user.interface';
 import { UpdateUserRoleRequest } from '../interfaces/update-user-role-request.interface';
 import { Role } from '../enums/role.enum';
+import { unwrapData } from '../../shared/utils/unwrap-response.util';
 
 @Injectable({
   providedIn: 'root'
@@ -24,20 +25,29 @@ export class UserService {
     }
 
     return this.http
-      .get<User[]>(this.apiUrl, { params })
-      .pipe(catchError((error) => this.handleError(error)));
+      .get<User[] | { data: User[] }>(this.apiUrl, { params })
+      .pipe(
+        map((response) => unwrapData(response)),
+        catchError((error) => this.handleError(error))
+      );
   }
 
   getUserById(id: string): Observable<User> {
     return this.http
-      .get<User>(`${this.apiUrl}/${id}`)
-      .pipe(catchError((error) => this.handleError(error)));
+      .get<User | { data: User }>(`${this.apiUrl}/${id}`)
+      .pipe(
+        map((response) => unwrapData(response)),
+        catchError((error) => this.handleError(error))
+      );
   }
 
   updateUserRole(id: string, data: UpdateUserRoleRequest): Observable<User> {
     return this.http
-      .patch<User>(`${this.apiUrl}/${id}/role`, data)
-      .pipe(catchError((error) => this.handleError(error)));
+      .patch<User | { data: User }>(`${this.apiUrl}/${id}/role`, data)
+      .pipe(
+        map((response) => unwrapData(response)),
+        catchError((error) => this.handleError(error))
+      );
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {

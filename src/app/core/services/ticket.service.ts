@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { Ticket } from '../interfaces/ticket.interface';
@@ -10,6 +10,7 @@ import { TicketListResponse } from '../interfaces/pagination.interface';
 import { CreateTicketRequest } from '../interfaces/create-ticket-request.interface';
 import { UpdateTicketRequest } from '../interfaces/update-ticket-request.interface';
 import { AssignTicketRequest } from '../interfaces/assign-ticket-request.interface';
+import { unwrapData } from '../../shared/utils/unwrap-response.util';
 
 @Injectable({
   providedIn: 'root'
@@ -39,26 +40,38 @@ export class TicketService {
 
   getTicketById(id: string): Observable<Ticket> {
     return this.http
-      .get<Ticket>(`${this.apiUrl}/${id}`)
-      .pipe(catchError((error) => this.handleError(error)));
+      .get<Ticket | { data: Ticket }>(`${this.apiUrl}/${id}`)
+      .pipe(
+        map((response) => unwrapData(response)),
+        catchError((error) => this.handleError(error))
+      );
   }
 
   createTicket(data: CreateTicketRequest): Observable<Ticket> {
     return this.http
-      .post<Ticket>(this.apiUrl, data)
-      .pipe(catchError((error) => this.handleError(error)));
+      .post<Ticket | { data: Ticket }>(this.apiUrl, data)
+      .pipe(
+        map((response) => unwrapData(response)),
+        catchError((error) => this.handleError(error))
+      );
   }
 
   updateTicket(id: string, data: UpdateTicketRequest): Observable<Ticket> {
     return this.http
-      .patch<Ticket>(`${this.apiUrl}/${id}`, data)
-      .pipe(catchError((error) => this.handleError(error)));
+      .patch<Ticket | { data: Ticket }>(`${this.apiUrl}/${id}`, data)
+      .pipe(
+        map((response) => unwrapData(response)),
+        catchError((error) => this.handleError(error))
+      );
   }
 
   assignTicket(id: string, data: AssignTicketRequest): Observable<Ticket> {
     return this.http
-      .post<Ticket>(`${this.apiUrl}/${id}/assign`, data)
-      .pipe(catchError((error) => this.handleError(error)));
+      .post<Ticket | { data: Ticket }>(`${this.apiUrl}/${id}/assign`, data)
+      .pipe(
+        map((response) => unwrapData(response)),
+        catchError((error) => this.handleError(error))
+      );
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {

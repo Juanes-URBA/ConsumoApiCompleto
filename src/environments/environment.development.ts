@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
+  production: false,
   apiUrl: 'https://sla-api.areasoftccyt.com/api'
 };

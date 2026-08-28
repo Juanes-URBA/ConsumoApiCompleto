@@ -25,11 +25,9 @@ export class TicketFormComponent implements OnInit {
   priorityOptions = Object.values(Priority).map((value) => ({ value, label: PRIORITY_LABELS[value] }));
   statusOptions = Object.values(TicketStatus).map((value) => ({ value, label: STATUS_LABELS[value] }));
 
-  // Solo admin puede editar título/descripción de un ticket existente;
-  // agent solo puede cambiar estado/prioridad.
   canEditContent = true;
 
-  private ticketId: string | null = null;
+  ticketId: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -59,7 +57,6 @@ export class TicketFormComponent implements OnInit {
       return;
     }
 
-    // Modo edición: cargar datos actuales del ticket.
     this.isLoading = true;
     this.ticketService.getTicketById(this.ticketId as string).subscribe({
       next: (ticket) => {
@@ -107,7 +104,14 @@ export class TicketFormComponent implements OnInit {
       next: (ticket) => {
         this.isSubmitting = false;
         this.toastService.show('Ticket creado correctamente.');
-        this.router.navigate(['/dashboard/tickets', ticket.id]);
+
+        // tal cual lo esperamos — copia este objeto y pégamelo en el chat.
+
+        if (ticket && ticket.id) {
+          this.router.navigate(['/dashboard/tickets', ticket.id]);
+        } else {
+          this.router.navigate(['/dashboard/tickets']);
+        }
       },
       error: (error: Error) => {
         this.isSubmitting = false;

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { UserService } from '../../../../core/services/user.service';
 import { TicketService } from '../../../../core/services/ticket.service';
@@ -18,6 +18,7 @@ export class AssignAgentModalComponent implements OnInit {
     return this._ticketId;
   }
 
+  @Input({ required: true })
   set ticketId(value: string) {
     this._ticketId = value;
   }
