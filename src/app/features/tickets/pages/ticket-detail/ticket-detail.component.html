@@ -14,6 +14,17 @@
         <app-status-badge [status]="ticket.status"></app-status-badge>
         <app-priority-badge [priority]="ticket.priority"></app-priority-badge>
       </div>
+      <div class="ticket-detail__badges">
+        <app-status-badge [status]="ticket.status"></app-status-badge>
+        <app-priority-badge [priority]="ticket.priority"></app-priority-badge>
+        <button
+          class="ticket-detail__edit-btn"
+          *ngIf="canEdit"
+          [routerLink]="['/dashboard/tickets', ticket.id, 'editar']"
+        >
+          Editar
+        </button>
+      </div>
     </div>
 
     <p class="ticket-detail__description">{{ ticket.description }}</p>

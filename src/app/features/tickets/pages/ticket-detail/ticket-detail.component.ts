@@ -5,6 +5,8 @@ import { TicketService } from '../../../../core/services/ticket.service';
 import { CommentService } from '../../../../core/services/comment.service';
 import { Ticket } from '../../../../core/interfaces/ticket.interface';
 import { Comment } from '../../../../core/interfaces/comment.interface';
+import { Role } from '../../../../core/enums/role.enum';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-ticket-detail',
@@ -18,17 +20,19 @@ export class TicketDetailComponent implements OnInit {
   isLoadingTicket = false;
   isLoadingComments = false;
   isSubmittingComment = false;
+  canEdit = false;
 
   ticketErrorMessage = '';
   commentErrorMessage = '';
 
   private ticketId = '';
 
-  constructor(
+   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private ticketService: TicketService,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +42,8 @@ export class TicketDetailComponent implements OnInit {
       this.router.navigate(['/dashboard/tickets']);
       return;
     }
-
+    const role = this.authService.getUserRole();
+    this.canEdit = role === Role.ADMIN || role === Role.AGENT;
     this.loadTicket();
     this.loadComments();
   }

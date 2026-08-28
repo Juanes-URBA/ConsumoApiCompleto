@@ -5,15 +5,23 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { StatusBadgeComponent } from './components/status-badge/status-badge.component';
 import { PriorityBadgeComponent } from './components/priority-badge/priority-badge.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
+import { ToastComponent } from './components/toast/toast.component';
 
 @NgModule({
   declarations: [
     SpinnerComponent,
     StatusBadgeComponent,
     PriorityBadgeComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    ToastComponent
   ],
   imports: [CommonModule],
-  exports: [SpinnerComponent, StatusBadgeComponent, PriorityBadgeComponent, PaginatorComponent]
+  exports: [
+    SpinnerComponent,
+    StatusBadgeComponent,
+    PriorityBadgeComponent,
+    PaginatorComponent,
+    ToastComponent
+  ]
 })
 export class SharedModule {}

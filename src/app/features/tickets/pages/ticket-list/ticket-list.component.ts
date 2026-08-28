@@ -13,7 +13,7 @@ import { TicketFilterValue } from '../../components/ticket-filters/ticket-filter
 })
 export class TicketListComponent implements OnInit {
   tickets: Ticket[] = [];
-  total = 0;
+  totalPages = 1;
   isLoading = false;
   errorMessage = '';
 
@@ -51,7 +51,7 @@ export class TicketListComponent implements OnInit {
     this.ticketService.getTickets(this.filters).subscribe({
       next: (response) => {
         this.tickets = response.data;
-        this.total = response.meta.total;
+        this.totalPages = response.meta.totalPages;
         this.isLoading = false;
       },
       error: (error: Error) => {
