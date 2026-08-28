@@ -1,0 +1,8 @@
+<div class="comment-item">
+  <div class="comment-item__header">
+    <span class="comment-item__author">{{ comment.author }}</span>
+    <span class="comment-item__role">{{ comment.role }}</span>
+    <span class="comment-item__date">{{ comment.createdAt | date: 'short' }}</span>
+  </div>
+  <p class="comment-item__content">{{ comment.content }}</p>
+</div>

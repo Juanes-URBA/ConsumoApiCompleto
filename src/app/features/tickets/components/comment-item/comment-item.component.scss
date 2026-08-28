@@ -1,0 +1,43 @@
+.comment-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #f3f4f6;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  &__author {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #1f2937;
+  }
+
+  &__role {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    background: #eff6ff;
+    color: #2563eb;
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+
+  &__date {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin-left: auto;
+  }
+
+  &__content {
+    font-size: 0.875rem;
+    color: #374151;
+    margin: 0;
+    white-space: pre-wrap;
+  }
+}

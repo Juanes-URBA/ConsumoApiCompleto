@@ -1,0 +1,20 @@
+<form [formGroup]="commentForm" (ngSubmit)="onSubmit()" class="comment-form">
+  <div class="comment-form__field">
+    <textarea
+      formControlName="content"
+      rows="3"
+      placeholder="Escribe un comentario..."
+    ></textarea>
+    <small class="error" *ngIf="content?.touched && content?.hasError('required')">
+      El comentario no puede estar vacío.
+    </small>
+    <small class="error" *ngIf="content?.touched && content?.hasError('minlength')">
+      El comentario es demasiado corto.
+    </small>
+  </div>
+
+  <button type="submit" [disabled]="commentForm.invalid || isSubmitting" class="btn-primary">
+    <span *ngIf="!isSubmitting">Comentar</span>
+    <span *ngIf="isSubmitting">Enviando...</span>
+  </button>
+</form>
