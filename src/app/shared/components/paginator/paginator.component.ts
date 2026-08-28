@@ -7,14 +7,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class PaginatorComponent {
   @Input({ required: true }) page = 1;
-  @Input({ required: true }) limit = 10;
-  @Input({ required: true }) total = 0;
+  @Input({ required: true }) totalPages = 1;
 
   @Output() pageChange = new EventEmitter<number>();
-
-  get totalPages(): number {
-    return Math.max(Math.ceil(this.total / this.limit), 1);
-  }
 
   get isFirstPage(): boolean {
     return this.page <= 1;

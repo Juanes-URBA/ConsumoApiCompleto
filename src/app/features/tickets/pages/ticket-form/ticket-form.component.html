@@ -1,0 +1,77 @@
+<div class="ticket-form">
+  <a [routerLink]="mode === 'edit' ? ['/dashboard/tickets', ticketId] : ['/dashboard/tickets']" class="ticket-form__back">
+    ‹ Volver
+  </a>
+
+  <h1 class="ticket-form__title">
+    {{ mode === 'create' ? 'Crear Ticket' : 'Editar Ticket' }}
+  </h1>
+
+  <app-spinner *ngIf="isLoading"></app-spinner>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="ticket-form__form" *ngIf="!isLoading">
+    <div class="form-group">
+      <label for="title">Título</label>
+      <input id="title" type="text" formControlName="title" placeholder="Resumen breve del problema" />
+      <small
+        class="error"
+        *ngIf="form.get('title')?.touched && form.get('title')?.hasError('required')"
+      >
+        El título es obligatorio.
+      </small>
+      <small
+        class="error"
+        *ngIf="form.get('title')?.touched && form.get('title')?.hasError('minlength')"
+      >
+        El título debe tener al menos 5 caracteres.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Descripción</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        rows="4"
+        placeholder="Describe el problema con el mayor detalle posible"
+      ></textarea>
+      <small
+        class="error"
+        *ngIf="form.get('description')?.touched && form.get('description')?.hasError('required')"
+      >
+        La descripción es obligatoria.
+      </small>
+      <small
+        class="error"
+        *ngIf="form.get('description')?.touched && form.get('description')?.hasError('minlength')"
+      >
+        La descripción debe tener al menos 10 caracteres.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label for="priority">Prioridad</label>
+      <select id="priority" formControlName="priority">
+        <option *ngFor="let option of priorityOptions" [ngValue]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group" *ngIf="mode === 'edit'">
+      <label for="status">Estado</label>
+      <select id="status" formControlName="status">
+        <option *ngFor="let option of statusOptions" [ngValue]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+    </div>
+
+    <small class="error error--general" *ngIf="errorMessage">{{ errorMessage }}</small>
+
+    <button type="submit" [disabled]="form.invalid || isSubmitting" class="btn-primary">
+      <span *ngIf="!isSubmitting">{{ mode === 'create' ? 'Crear Ticket' : 'Guardar Cambios' }}</span>
+      <span *ngIf="isSubmitting">Guardando...</span>
+    </button>
+  </form>
+</div>

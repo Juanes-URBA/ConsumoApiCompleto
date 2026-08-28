@@ -43,8 +43,7 @@
 
     <app-paginator
       [page]="filters.page"
-      [limit]="filters.limit"
-      [total]="total"
+      [totalPages]="totalPages"
       (pageChange)="onPageChange($event)"
     ></app-paginator>
   </div>
