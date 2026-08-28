@@ -1,0 +1,27 @@
+.ticket-filters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    label {
+      font-size: 0.8rem;
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    select {
+      padding: 8px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      min-width: 160px;
+      background: #ffffff;
+    }
+  }
+}

@@ -1,0 +1,51 @@
+<div class="ticket-list">
+  <h1 class="ticket-list__title">Tickets</h1>
+
+  <app-ticket-filters (filtersChange)="onFiltersChange($event)"></app-ticket-filters>
+
+  <app-spinner *ngIf="isLoading"></app-spinner>
+
+  <small class="error" *ngIf="errorMessage && !isLoading">{{ errorMessage }}</small>
+
+  <div class="ticket-list__table-wrapper" *ngIf="!isLoading && !errorMessage">
+    <table class="ticket-table" *ngIf="tickets.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Estado</th>
+          <th>Prioridad</th>
+          <th>Agente</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ticket of tickets">
+          <td>{{ ticket.id }}</td>
+          <td>{{ ticket.title }}</td>
+          <td><app-status-badge [status]="ticket.status"></app-status-badge></td>
+          <td><app-priority-badge [priority]="ticket.priority"></app-priority-badge></td>
+          <td>{{ ticket.assignedTo || 'Sin asignar' }}</td>
+          <td>{{ ticket.createdAt | date: 'short' }}</td>
+          <td>
+            <button class="ticket-table__action" (click)="onViewTicket(ticket.id)">
+              Ver
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="ticket-list__empty" *ngIf="tickets.length === 0">
+      No hay tickets que coincidan con los filtros seleccionados.
+    </p>
+
+    <app-paginator
+      [page]="filters.page"
+      [limit]="filters.limit"
+      [total]="total"
+      (pageChange)="onPageChange($event)"
+    ></app-paginator>
+  </div>
+</div>
