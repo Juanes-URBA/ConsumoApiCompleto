@@ -1,0 +1,52 @@
+.assign-modal__empty {
+  text-align: center;
+  color: #9ca3af;
+  padding: 16px 0;
+}
+
+.assign-modal__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+
+  label {
+    font-size: 0.85rem;
+    color: #374151;
+    font-weight: 500;
+  }
+
+  select {
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.9rem;
+  }
+}
+
+.error {
+  display: block;
+  color: #dc2626;
+  font-size: 0.85rem;
+  padding: 8px 0;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background-color: #1d4ed8;
+  }
+
+  &:disabled {
+    background-color: #93c5fd;
+    cursor: not-allowed;
+  }
+}

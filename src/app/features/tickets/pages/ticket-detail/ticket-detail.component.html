@@ -24,6 +24,13 @@
         >
           Editar
         </button>
+        <button
+          class="ticket-detail__assign-btn"
+          *ngIf="isAdmin"
+          (click)="showAssignModal = true"
+        >
+          Asignar
+        </button>
       </div>
     </div>
 
@@ -62,5 +69,13 @@
       [isSubmitting]="isSubmittingComment"
       (submitComment)="onSubmitComment($event)"
     ></app-comment-form>
-  </div>
+
+     <app-assign-agent-modal
+      *ngIf="showAssignModal"
+      [ticketId]="ticket.id"
+      (closeModal)="showAssignModal = false"
+      (assigned)="onTicketAssigned($event)"
+    ></app-assign-agent-modal>
+    </div>
+
 </div>
