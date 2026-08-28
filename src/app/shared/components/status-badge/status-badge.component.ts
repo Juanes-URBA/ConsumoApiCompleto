@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { TicketStatus } from '../../../core/enums/ticket-status.enum';
+import { STATUS_LABELS } from '../../utils/ticket-labels.util';
 
 @Component({
   selector: 'app-status-badge',
@@ -9,6 +10,10 @@ import { TicketStatus } from '../../../core/enums/ticket-status.enum';
 })
 export class StatusBadgeComponent {
   @Input({ required: true }) status!: TicketStatus;
+
+  get label(): string {
+    return STATUS_LABELS[this.status];
+  }
 
   get cssClass(): string {
     const map: Record<TicketStatus, string> = {

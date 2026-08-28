@@ -3,7 +3,9 @@
     <label for="status">Estado</label>
     <select id="status" formControlName="status">
       <option [ngValue]="null">Todos</option>
-      <option *ngFor="let status of statusOptions" [ngValue]="status">{{ status }}</option>
+      <option *ngFor="let option of statusOptions" [ngValue]="option.value">
+        {{ option.label }}
+      </option>
     </select>
   </div>
 
@@ -11,7 +13,9 @@
     <label for="priority">Prioridad</label>
     <select id="priority" formControlName="priority">
       <option [ngValue]="null">Todas</option>
-      <option *ngFor="let priority of priorityOptions" [ngValue]="priority">{{ priority }}</option>
+      <option *ngFor="let option of priorityOptions" [ngValue]="option.value">
+        {{ option.label }}
+      </option>
     </select>
   </div>
 </form>

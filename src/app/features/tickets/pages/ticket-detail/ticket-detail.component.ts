@@ -43,11 +43,11 @@ export class TicketDetailComponent implements OnInit {
     this.loadComments();
   }
 
-  onSubmitComment(content: string): void {
+  onSubmitComment(body: string): void {
     this.isSubmittingComment = true;
     this.commentErrorMessage = '';
 
-    this.commentService.addComment(this.ticketId, { content }).subscribe({
+    this.commentService.addComment(this.ticketId, { body }).subscribe({
       next: () => {
         this.isSubmittingComment = false;
         this.loadComments();

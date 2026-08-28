@@ -51,7 +51,7 @@ export class TicketListComponent implements OnInit {
     this.ticketService.getTickets(this.filters).subscribe({
       next: (response) => {
         this.tickets = response.data;
-        this.total = response.total;
+        this.total = response.meta.total;
         this.isLoading = false;
       },
       error: (error: Error) => {
