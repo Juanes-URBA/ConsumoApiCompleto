@@ -23,6 +23,11 @@
     color: #9ca3af;
     margin-top: 12px;
   }
+    &__grid {
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
 }
 
 .stat-card {
