@@ -41,8 +41,12 @@ const routes: Routes = [
         data: { roles: [Role.ADMIN] },
         loadChildren: () =>
           import('./features/users/users.module').then((m) => m.UsersModule)
+      },
+      {
+        path: 'perfil',
+        loadChildren: () =>
+          import('./features/profile/profile.module').then((m) => m.ProfileModule)
       }
-      // Perfil se agrega en el Avance 9.
     ]
   },
   { path: '**', component: NotFoundComponent }
