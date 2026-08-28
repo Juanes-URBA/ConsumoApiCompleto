@@ -1,0 +1,78 @@
+<div class="auth-card">
+  <h1 class="auth-card__title">Crear cuenta</h1>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+    <div class="form-group">
+      <label for="name">Nombre</label>
+      <input id="name" type="text" formControlName="name" placeholder="Tu nombre" />
+      <small class="error" *ngIf="name?.touched && name?.hasError('required')">
+        El nombre es obligatorio.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Correo electrónico</label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        placeholder="correo@ejemplo.com"
+      />
+      <small class="error" *ngIf="email?.touched && email?.hasError('required')">
+        El correo es obligatorio.
+      </small>
+      <small class="error" *ngIf="email?.touched && email?.hasError('email')">
+        Ingresa un correo válido.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Contraseña</label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        placeholder="••••••••"
+      />
+      <small class="error" *ngIf="password?.touched && password?.hasError('required')">
+        La contraseña es obligatoria.
+      </small>
+      <small class="error" *ngIf="password?.touched && password?.hasError('minlength')">
+        Debe tener al menos 6 caracteres.
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Confirmar contraseña</label>
+      <input
+        id="confirmPassword"
+        type="password"
+        formControlName="confirmPassword"
+        placeholder="••••••••"
+      />
+      <small
+        class="error"
+        *ngIf="confirmPassword?.touched && confirmPassword?.hasError('required')"
+      >
+        Debes confirmar la contraseña.
+      </small>
+      <small
+        class="error"
+        *ngIf="confirmPassword?.touched && registerForm.hasError('passwordMismatch')"
+      >
+        Las contraseñas no coinciden.
+      </small>
+    </div>
+
+    <small class="error error--general" *ngIf="errorMessage">{{ errorMessage }}</small>
+
+    <button type="submit" [disabled]="registerForm.invalid || isLoading" class="btn-primary">
+      <span *ngIf="!isLoading">Registrarme</span>
+      <span *ngIf="isLoading">Cargando...</span>
+    </button>
+
+    <p class="auth-form__link">
+      ¿Ya tienes cuenta? <a routerLink="/auth/login">Inicia sesión</a>
+    </p>
+  </form>
+</div>
