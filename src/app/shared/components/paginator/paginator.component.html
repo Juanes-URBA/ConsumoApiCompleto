@@ -1,0 +1,11 @@
+<div class="paginator" *ngIf="totalPages > 1">
+  <button class="paginator__btn" [disabled]="isFirstPage" (click)="goToPrevious()">
+    ‹ Anterior
+  </button>
+
+  <span class="paginator__info">Página {{ page }} de {{ totalPages }}</span>
+
+  <button class="paginator__btn" [disabled]="isLastPage" (click)="goToNext()">
+    Siguiente ›
+  </button>
+</div>

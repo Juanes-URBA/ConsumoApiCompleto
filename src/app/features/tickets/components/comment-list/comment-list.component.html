@@ -1,0 +1,7 @@
+<div class="comment-list">
+  <app-comment-item *ngFor="let comment of comments" [comment]="comment"></app-comment-item>
+
+  <p class="comment-list__empty" *ngIf="comments.length === 0">
+    Todavía no hay comentarios en este ticket.
+  </p>
+</div>

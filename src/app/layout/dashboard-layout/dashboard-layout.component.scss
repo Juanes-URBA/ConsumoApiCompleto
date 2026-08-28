@@ -1,0 +1,28 @@
+.dashboard-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  &__body {
+    flex: 1;
+    display: flex;
+  }
+
+  &__content {
+    flex: 1;
+    padding: 24px;
+    overflow-x: hidden;
+  }
+
+  &__overlay {
+    display: none;
+
+    @media (max-width: 768px) {
+      display: block;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.4);
+      z-index: 90;
+    }
+  }
+}

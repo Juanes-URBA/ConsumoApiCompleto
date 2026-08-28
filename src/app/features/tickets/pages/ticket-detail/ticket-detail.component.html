@@ -1,0 +1,81 @@
+<div class="ticket-detail">
+  <a routerLink="/dashboard/tickets" class="ticket-detail__back">‹ Volver a Tickets</a>
+
+  <app-spinner *ngIf="isLoadingTicket"></app-spinner>
+
+  <small class="error" *ngIf="ticketErrorMessage && !isLoadingTicket">
+    {{ ticketErrorMessage }}
+  </small>
+
+  <div class="ticket-detail__card" *ngIf="ticket && !isLoadingTicket">
+    <div class="ticket-detail__header">
+      <h1 class="ticket-detail__title">{{ ticket.title }}</h1>
+      <div class="ticket-detail__badges">
+        <app-status-badge [status]="ticket.status"></app-status-badge>
+        <app-priority-badge [priority]="ticket.priority"></app-priority-badge>
+      </div>
+      <div class="ticket-detail__badges">
+        <app-status-badge [status]="ticket.status"></app-status-badge>
+        <app-priority-badge [priority]="ticket.priority"></app-priority-badge>
+        <button
+          class="ticket-detail__edit-btn"
+          *ngIf="canEdit"
+          [routerLink]="['/dashboard/tickets', ticket.id, 'editar']"
+        >
+          Editar
+        </button>
+        <button
+          class="ticket-detail__assign-btn"
+          *ngIf="isAdmin"
+          (click)="showAssignModal = true"
+        >
+          Asignar
+        </button>
+      </div>
+    </div>
+
+    <p class="ticket-detail__description">{{ ticket.description }}</p>
+
+    <div class="ticket-detail__meta">
+      <div class="meta-item">
+        <span class="meta-item__label">Creado por</span>
+        <span class="meta-item__value">{{ ticket.createdBy }}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-item__label">Agente asignado</span>
+        <span class="meta-item__value">{{ ticket.assignedTo || 'Sin asignar' }}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-item__label">Fecha de creación</span>
+        <span class="meta-item__value">{{ ticket.createdAt | date: 'medium' }}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-item__label">Última actualización</span>
+        <span class="meta-item__value">{{ ticket.updatedAt | date: 'medium' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ticket-detail__comments" *ngIf="ticket && !isLoadingTicket">
+    <h2 class="ticket-detail__comments-title">Comentarios</h2>
+
+    <app-spinner *ngIf="isLoadingComments"></app-spinner>
+
+    <app-comment-list *ngIf="!isLoadingComments" [comments]="comments"></app-comment-list>
+
+    <small class="error" *ngIf="commentErrorMessage">{{ commentErrorMessage }}</small>
+
+    <app-comment-form
+      [isSubmitting]="isSubmittingComment"
+      (submitComment)="onSubmitComment($event)"
+    ></app-comment-form>
+
+     <app-assign-agent-modal
+      *ngIf="showAssignModal"
+      [ticketId]="ticket.id"
+      (closeModal)="showAssignModal = false"
+      (assigned)="onTicketAssigned($event)"
+    ></app-assign-agent-modal>
+    </div>
+
+</div>

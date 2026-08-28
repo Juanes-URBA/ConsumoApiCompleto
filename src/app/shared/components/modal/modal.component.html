@@ -1,0 +1,14 @@
+<div class="modal-overlay" (click)="onOverlayClick($event)">
+  <div class="modal-card">
+    <div class="modal-card__header">
+      <h2 class="modal-card__title">{{ title }}</h2>
+      <button class="modal-card__close" (click)="closeModal.emit()" aria-label="Cerrar">
+        ✕
+      </button>
+    </div>
+
+    <div class="modal-card__body">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

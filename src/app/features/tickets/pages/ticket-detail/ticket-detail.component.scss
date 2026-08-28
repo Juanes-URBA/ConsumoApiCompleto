@@ -1,0 +1,105 @@
+.ticket-detail {
+  &__back {
+    display: inline-block;
+    margin-bottom: 16px;
+    font-size: 0.875rem;
+    color: #2563eb;
+    font-weight: 500;
+  }
+
+  &__card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  &__title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+  }
+
+  &__badges {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__description {
+    color: #4b5563;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  &__meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+
+  &__comments {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    padding: 24px;
+  }
+
+  &__comments-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0 0 12px;
+  }
+
+  &__edit-btn {
+    padding: 6px 14px;
+    border: 1px solid #2563eb;
+    color: #2563eb;
+    background: transparent;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 8px;
+
+    &:hover {
+      background: #eff6ff;
+    }
+  }
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  &__label {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+  }
+
+  &__value {
+    font-size: 0.875rem;
+    color: #1f2937;
+    font-weight: 500;
+  }
+}
+
+.error {
+  display: block;
+  color: #dc2626;
+  font-size: 0.85rem;
+  padding: 8px 0;
+}

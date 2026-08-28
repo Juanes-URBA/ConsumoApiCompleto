@@ -1,0 +1,23 @@
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+
+  &--admin {
+    background: #fee2e2;
+    color: #dc2626;
+  }
+
+  &--agent {
+    background: #dbeafe;
+    color: #1d4ed8;
+  }
+
+  &--client {
+    background: #e5e7eb;
+    color: #4b5563;
+  }
+}

@@ -1,0 +1,21 @@
+<form [formGroup]="filtersForm" class="ticket-filters">
+  <div class="ticket-filters__field">
+    <label for="status">Estado</label>
+    <select id="status" formControlName="status">
+      <option [ngValue]="null">Todos</option>
+      <option *ngFor="let option of statusOptions" [ngValue]="option.value">
+        {{ option.label }}
+      </option>
+    </select>
+  </div>
+
+  <div class="ticket-filters__field">
+    <label for="priority">Prioridad</label>
+    <select id="priority" formControlName="priority">
+      <option [ngValue]="null">Todas</option>
+      <option *ngFor="let option of priorityOptions" [ngValue]="option.value">
+        {{ option.label }}
+      </option>
+    </select>
+  </div>
+</form>

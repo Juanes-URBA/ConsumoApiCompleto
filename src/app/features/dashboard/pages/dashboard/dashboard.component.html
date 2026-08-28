@@ -1,0 +1,75 @@
+<div class="dashboard">
+  <h1 class="dashboard__title">Dashboard</h1>
+
+
+    <!-- ADMIN -->
+  <div class="dashboard__grid" *ngIf="role === roleEnum.ADMIN">
+    <div class="stat-card">
+      <span class="stat-card__label">Total de tickets</span>
+      <span class="stat-card__value">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-card__label">Abiertos</span>
+      <span class="stat-card__value">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-card__label">En progreso</span>
+      <span class="stat-card__value">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-card__label">Resueltos</span>
+      <span class="stat-card__value">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-card__label">Cerrados</span>
+      <span class="stat-card__value">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-card__label">Usuarios registrados</span>
+      <span class="stat-card__value">—</span>
+    </div>
+    <button class="btn-primary dashboard__new-ticket" routerLink="/dashboard/tickets/nuevo">
+      + Crear Ticket
+    </button>
+  </div>
+
+  <!-- AGENT -->
+  <div class="dashboard__grid" *ngIf="role === roleEnum.AGENT">
+    <div class="stat-card">
+      <span class="stat-card__label">Tickets asignados</span>
+      <span class="stat-card__value">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-card__label">Sin asignar</span>
+      <span class="stat-card__value">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-card__label">Resueltos</span>
+      <span class="stat-card__value">—</span>
+    </div>
+  </div>
+
+  <!-- CLIENT -->
+  <div class="dashboard__grid" *ngIf="role === roleEnum.CLIENT">
+    <div class="stat-card">
+      <span class="stat-card__label">Mis tickets</span>
+      <span class="stat-card__value">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-card__label">Abiertos</span>
+      <span class="stat-card__value">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-card__label">En progreso</span>
+      <span class="stat-card__value">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-card__label">Resueltos</span>
+      <span class="stat-card__value">—</span>
+    </div>
+    <button class="btn-primary dashboard__new-ticket" routerLink="/dashboard/tickets/nuevo">
+      + Crear Ticket
+    </button>
+  </div>
+
+</div>

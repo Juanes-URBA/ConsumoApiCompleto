@@ -1,0 +1,30 @@
+<nav class="navbar">
+  <div class="navbar__brand">
+    <button class="navbar__hamburger" (click)="toggleSidebar.emit()" aria-label="Abrir menú">
+      ☰
+    </button>
+    <span class="navbar__logo">🎧</span>
+    <span class="navbar__title">Help Desk</span>
+  </div>
+
+  <div class="navbar__user" *ngIf="currentUser">
+    <div class="navbar__user-info">
+      <span class="navbar__user-name">{{ currentUser.name }}</span>
+      <span class="navbar__user-role">{{ currentUser.role }}</span>
+    </div>
+
+    <button class="navbar__icon-btn" (click)="onProfileClick()" title="Perfil">
+      👤
+    </button>
+
+    <button
+      class="navbar__icon-btn"
+      (click)="onLogoutClick()"
+      [disabled]="isLoggingOut"
+      title="Cerrar sesión"
+    >
+      <span *ngIf="!isLoggingOut">🚪</span>
+      <span *ngIf="isLoggingOut">...</span>
+    </button>
+  </div>
+</nav>
