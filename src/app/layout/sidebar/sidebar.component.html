@@ -1,0 +1,15 @@
+<aside class="sidebar">
+  <ul class="sidebar__list">
+    <li class="sidebar__item" *ngFor="let item of items">
+      
+        [routerLink]="item.route"
+        routerLinkActive="sidebar__link--active"
+        [routerLinkActiveOptions]="{ exact: item.route === '/dashboard' }"
+        class="sidebar__link"
+      >
+        <span class="sidebar__icon">{{ item.icon }}</span>
+        <span>{{ item.label }}</span>
+      </a>
+    </li>
+  </ul>
+</aside>
