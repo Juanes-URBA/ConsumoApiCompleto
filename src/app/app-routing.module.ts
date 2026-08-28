@@ -1,9 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-// Las rutas de cada feature se agregarán aquí con Lazy Loading
-// en los siguientes avances (auth, dashboard, tickets, users).
-const routes: Routes = [];
+const routes: Routes = [
+  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  {
+    path: 'auth',
+    loadChildren: () => import('./features/auth/auth.module').then((m) => m.AuthModule)
+  }
+  // Las rutas de dashboard, tickets y users se agregan
+  // con Lazy Loading en los próximos avances.
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
