@@ -1,0 +1,30 @@
+<app-modal title="Asignar ticket a un agente" (closeModal)="closeModal.emit()">
+  <app-spinner *ngIf="isLoading"></app-spinner>
+
+  <small class="error" *ngIf="errorMessage && !isLoading">{{ errorMessage }}</small>
+
+  <div *ngIf="!isLoading && !errorMessage">
+    <p class="assign-modal__empty" *ngIf="agents.length === 0">
+      No hay agentes disponibles en este momento.
+    </p>
+
+    <div class="assign-modal__field" *ngIf="agents.length > 0">
+      <label for="agent">Selecciona un agente</label>
+      <select id="agent" [(ngModel)]="selectedAgentId">
+        <option [ngValue]="null" disabled>-- Elige un agente --</option>
+        <option *ngFor="let agent of agents" [ngValue]="agent.id">
+          {{ agent.name }} ({{ agent.email }})
+        </option>
+      </select>
+    </div>
+
+    <button
+      class="btn-primary"
+      [disabled]="!selectedAgentId || isSubmitting"
+      (click)="onConfirm()"
+    >
+      <span *ngIf="!isSubmitting">Confirmar Asignación</span>
+      <span *ngIf="isSubmitting">Asignando...</span>
+    </button>
+  </div>
+</app-modal>

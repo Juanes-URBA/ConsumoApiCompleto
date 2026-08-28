@@ -9,6 +9,7 @@ import { TicketFilters } from '../interfaces/ticket-filters.interface';
 import { TicketListResponse } from '../interfaces/pagination.interface';
 import { CreateTicketRequest } from '../interfaces/create-ticket-request.interface';
 import { UpdateTicketRequest } from '../interfaces/update-ticket-request.interface';
+import { AssignTicketRequest } from '../interfaces/assign-ticket-request.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +52,12 @@ export class TicketService {
   updateTicket(id: string, data: UpdateTicketRequest): Observable<Ticket> {
     return this.http
       .patch<Ticket>(`${this.apiUrl}/${id}`, data)
+      .pipe(catchError((error) => this.handleError(error)));
+  }
+
+  assignTicket(id: string, data: AssignTicketRequest): Observable<Ticket> {
+    return this.http
+      .post<Ticket>(`${this.apiUrl}/${id}/assign`, data)
       .pipe(catchError((error) => this.handleError(error)));
   }
 

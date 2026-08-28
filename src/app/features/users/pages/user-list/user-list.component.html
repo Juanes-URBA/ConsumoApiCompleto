@@ -1,0 +1,40 @@
+<div class="user-list">
+  <h1 class="user-list__title">Usuarios</h1>
+
+  <app-spinner *ngIf="isLoading"></app-spinner>
+
+  <small class="error" *ngIf="errorMessage && !isLoading">{{ errorMessage }}</small>
+
+  <div class="user-list__table-wrapper" *ngIf="!isLoading && !errorMessage">
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Rol actual</th>
+          <th>Cambiar rol</th>
+          <th>Registrado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td><app-role-badge [role]="user.role"></app-role-badge></td>
+          <td>
+            <select
+              [ngModel]="user.role"
+              (ngModelChange)="onRoleChange(user, $event)"
+              [disabled]="updatingUserId === user.id"
+            >
+              <option *ngFor="let role of roleOptions" [ngValue]="role">{{ role }}</option>
+            </select>
+          </td>
+          <td>{{ user.createdAt | date: 'mediumDate' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="user-list__empty" *ngIf="users.length === 0">No hay usuarios registrados.</p>
+  </div>
+</div>

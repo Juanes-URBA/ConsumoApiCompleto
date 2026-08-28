@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './core/guards/auth.guard';
+import { RoleGuard } from './core/guards/role.guard';
+import { Role } from './core/enums/role.enum';
 import { PublicLayoutComponent } from './layout/public-layout/public-layout.component';
 import { DashboardLayoutComponent } from './layout/dashboard-layout/dashboard-layout.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
@@ -32,9 +34,15 @@ const routes: Routes = [
         path: 'tickets',
         loadChildren: () =>
           import('./features/tickets/tickets.module').then((m) => m.TicketsModule)
+      },
+      {
+        path: 'usuarios',
+        canActivate: [RoleGuard],
+        data: { roles: [Role.ADMIN] },
+        loadChildren: () =>
+          import('./features/users/users.module').then((m) => m.UsersModule)
       }
-      // Usuarios y Perfil se agregan aquí como hijas del DashboardLayoutComponent
-      // en los próximos avances.
+      // Perfil se agrega en el Avance 9.
     ]
   },
   { path: '**', component: NotFoundComponent }

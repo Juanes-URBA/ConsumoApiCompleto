@@ -21,6 +21,8 @@ export class TicketDetailComponent implements OnInit {
   isLoadingComments = false;
   isSubmittingComment = false;
   canEdit = false;
+  isAdmin = false;
+  showAssignModal = false;
 
   ticketErrorMessage = '';
   commentErrorMessage = '';
@@ -44,6 +46,7 @@ export class TicketDetailComponent implements OnInit {
     }
     const role = this.authService.getUserRole();
     this.canEdit = role === Role.ADMIN || role === Role.AGENT;
+    this.isAdmin = role === Role.ADMIN;
     this.loadTicket();
     this.loadComments();
   }
@@ -78,6 +81,13 @@ export class TicketDetailComponent implements OnInit {
         this.isLoadingTicket = false;
       }
     });
+  }
+  onTicketAssigned(agentId: string): void {
+    this.showAssignModal = false;
+
+    if (this.ticket) {
+      this.ticket.assignedTo = agentId;
+    }
   }
 
   private loadComments(): void {
