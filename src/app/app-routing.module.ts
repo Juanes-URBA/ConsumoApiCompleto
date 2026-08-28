@@ -27,9 +27,14 @@ const routes: Routes = [
         path: '',
         loadChildren: () =>
           import('./features/dashboard/dashboard.module').then((m) => m.DashboardModule)
+      },
+      {
+        path: 'tickets',
+        loadChildren: () =>
+          import('./features/tickets/tickets.module').then((m) => m.TicketsModule)
       }
-      // Las rutas de tickets, usuarios y perfil se agregan aquí
-      // como hijas del DashboardLayoutComponent en los próximos avances.
+      // Usuarios y Perfil se agregan aquí como hijas del DashboardLayoutComponent
+      // en los próximos avances.
     ]
   },
   { path: '**', component: NotFoundComponent }
