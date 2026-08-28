@@ -3,10 +3,16 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { TicketStatus } from '../../../../core/enums/ticket-status.enum';
 import { Priority } from '../../../../core/enums/priority.enum';
+import { STATUS_LABELS, PRIORITY_LABELS } from '../../../../shared/utils/ticket-labels.util';
 
 export interface TicketFilterValue {
   status: TicketStatus | null;
   priority: Priority | null;
+}
+
+interface FilterOption<T> {
+  value: T;
+  label: string;
 }
 
 @Component({
@@ -18,8 +24,16 @@ export class TicketFiltersComponent {
   @Output() filtersChange = new EventEmitter<TicketFilterValue>();
 
   filtersForm: FormGroup;
-  statusOptions = Object.values(TicketStatus);
-  priorityOptions = Object.values(Priority);
+
+  statusOptions: FilterOption<TicketStatus>[] = Object.values(TicketStatus).map((value) => ({
+    value,
+    label: STATUS_LABELS[value]
+  }));
+
+  priorityOptions: FilterOption<Priority>[] = Object.values(Priority).map((value) => ({
+    value,
+    label: PRIORITY_LABELS[value]
+  }));
 
   constructor(private fb: FormBuilder) {
     this.filtersForm = this.fb.group({

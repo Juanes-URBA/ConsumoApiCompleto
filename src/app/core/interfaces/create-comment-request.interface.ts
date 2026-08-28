@@ -1,3 +1,3 @@
 export interface CreateCommentRequest {
-  content: string;
+  body: string;
 }

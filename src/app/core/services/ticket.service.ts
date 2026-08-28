@@ -6,7 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Ticket } from '../interfaces/ticket.interface';
 import { TicketFilters } from '../interfaces/ticket-filters.interface';
-import { PaginatedResponse } from '../interfaces/pagination.interface';
+import { TicketListResponse } from '../interfaces/pagination.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class TicketService {
 
   constructor(private http: HttpClient) {}
 
-  getTickets(filters: TicketFilters): Observable<PaginatedResponse<Ticket>> {
+  getTickets(filters: TicketFilters): Observable<TicketListResponse<Ticket>> {
     let params = new HttpParams()
       .set('page', filters.page)
       .set('limit', filters.limit);
@@ -30,7 +30,7 @@ export class TicketService {
     }
 
     return this.http
-      .get<PaginatedResponse<Ticket>>(this.apiUrl, { params })
+      .get<TicketListResponse<Ticket>>(this.apiUrl, { params })
       .pipe(catchError((error) => this.handleError(error)));
   }
 
