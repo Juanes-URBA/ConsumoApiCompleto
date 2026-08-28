@@ -1,42 +1,29 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
-import { Ticket } from '../interfaces/ticket.interface';
-import { TicketFilters } from '../interfaces/ticket-filters.interface';
-import { PaginatedResponse } from '../interfaces/pagination.interface';
+import { Comment } from '../interfaces/comment.interface';
+import { CreateCommentRequest } from '../interfaces/create-comment-request.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TicketService {
+export class CommentService {
   private readonly apiUrl = `${environment.apiUrl}/tickets`;
 
   constructor(private http: HttpClient) {}
 
-  getTickets(filters: TicketFilters): Observable<PaginatedResponse<Ticket>> {
-    let params = new HttpParams()
-      .set('page', filters.page)
-      .set('limit', filters.limit);
-
-    if (filters.status) {
-      params = params.set('status', filters.status);
-    }
-
-    if (filters.priority) {
-      params = params.set('priority', filters.priority);
-    }
-
+  getComments(ticketId: string): Observable<Comment[]> {
     return this.http
-      .get<PaginatedResponse<Ticket>>(this.apiUrl, { params })
+      .get<Comment[]>(`${this.apiUrl}/${ticketId}/comments`)
       .pipe(catchError((error) => this.handleError(error)));
   }
 
-  getTicketById(id: string): Observable<Ticket> {
+  addComment(ticketId: string, data: CreateCommentRequest): Observable<Comment> {
     return this.http
-      .get<Ticket>(`${this.apiUrl}/${id}`)
+      .post<Comment>(`${this.apiUrl}/${ticketId}/comments`, data)
       .pipe(catchError((error) => this.handleError(error)));
   }
 
@@ -45,13 +32,13 @@ export class TicketService {
 
     switch (error.status) {
       case 400:
-        friendlyMessage = 'La solicitud no es válida.';
+        friendlyMessage = 'El comentario no es válido.';
         break;
       case 401:
         friendlyMessage = 'Tu sesión ha expirado. Inicia sesión nuevamente.';
         break;
       case 403:
-        friendlyMessage = 'No tienes permisos para ver este ticket.';
+        friendlyMessage = 'No tienes permisos para comentar en este ticket.';
         break;
       case 404:
         friendlyMessage = 'El ticket no existe.';
