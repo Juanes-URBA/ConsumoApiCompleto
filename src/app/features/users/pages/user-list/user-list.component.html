@@ -37,4 +37,18 @@
 
     <p class="user-list__empty" *ngIf="users.length === 0">No hay usuarios registrados.</p>
   </div>
+              <select
+              [ngModel]="user.role"
+              (ngModelChange)="onRoleSelect(user, $event)"
+              [disabled]="updatingUserId === user.id"
+            >
+              <option *ngFor="let role of roleOptions" [ngValue]="role">{{ role }}</option>
+            </select>
+              <app-confirm-dialog
+    *ngIf="pendingChange"
+    title="Cambiar rol de usuario"
+    [message]="'¿Confirmas cambiar el rol de ' + pendingChange.user.name + ' a ' + pendingChange.newRole + '?'"
+    (confirmed)="onConfirmRoleChange()"
+    (cancelled)="onCancelRoleChange()"
+  ></app-confirm-dialog>
 </div>

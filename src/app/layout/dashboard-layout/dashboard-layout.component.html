@@ -1,8 +1,14 @@
 <div class="dashboard-layout">
-  <app-navbar></app-navbar>
+  <app-navbar (toggleSidebar)="toggleSidebar()"></app-navbar>
 
   <div class="dashboard-layout__body">
-    <app-sidebar></app-sidebar>
+    <app-sidebar [class.sidebar--open]="isSidebarOpen"></app-sidebar>
+
+    <div
+      class="dashboard-layout__overlay"
+      *ngIf="isSidebarOpen"
+      (click)="toggleSidebar()"
+    ></div>
 
     <main class="dashboard-layout__content">
       <router-outlet></router-outlet>

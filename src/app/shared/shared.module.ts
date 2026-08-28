@@ -8,6 +8,7 @@ import { RoleBadgeComponent } from './components/role-badge/role-badge.component
 import { PaginatorComponent } from './components/paginator/paginator.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ModalComponent } from './components/modal/modal.component';
     RoleBadgeComponent,
     PaginatorComponent,
     ToastComponent,
-    ModalComponent
+    ModalComponent,
+    ConfirmDialogComponent
   ],
   imports: [CommonModule],
   exports: [
@@ -27,7 +29,8 @@ import { ModalComponent } from './components/modal/modal.component';
     RoleBadgeComponent,
     PaginatorComponent,
     ToastComponent,
-    ModalComponent
+    ModalComponent,
+    ConfirmDialogComponent
   ]
 })
 export class SharedModule {}

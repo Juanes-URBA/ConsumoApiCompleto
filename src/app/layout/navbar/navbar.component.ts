@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../core/services/auth.service';
@@ -12,6 +12,8 @@ import { User } from '../../core/interfaces/user.interface';
 export class NavbarComponent implements OnInit {
   currentUser: User | null = null;
   isLoggingOut = false;
+
+  @Output() toggleSidebar = new EventEmitter<void>();
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -32,7 +34,6 @@ export class NavbarComponent implements OnInit {
         this.router.navigate(['/auth/login']);
       },
       error: () => {
-        // Aunque falle la petición, AuthService ya limpió la sesión local.
         this.isLoggingOut = false;
         this.router.navigate(['/auth/login']);
       }

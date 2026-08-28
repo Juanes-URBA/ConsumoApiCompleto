@@ -15,9 +15,10 @@ export class UserListComponent implements OnInit {
   isLoading = false;
   errorMessage = '';
   roleOptions = Object.values(Role);
-
-  // Evita disparar más de un cambio de rol a la vez sobre el mismo usuario.
   updatingUserId: string | null = null;
+
+  // Estado del ConfirmDialog
+  pendingChange: { user: User; newRole: Role } | null = null;
 
   constructor(private userService: UserService, private toastService: ToastService) {}
 
@@ -25,12 +26,24 @@ export class UserListComponent implements OnInit {
     this.loadUsers();
   }
 
-  onRoleChange(user: User, newRole: Role): void {
+  onRoleSelect(user: User, newRole: Role): void {
     if (newRole === user.role) {
       return;
     }
 
+    // En vez de aplicar el cambio de inmediato, se pide confirmación visual
+    // (reemplaza al confirm() nativo del navegador).
+    this.pendingChange = { user, newRole };
+  }
+
+  onConfirmRoleChange(): void {
+    if (!this.pendingChange) {
+      return;
+    }
+
+    const { user, newRole } = this.pendingChange;
     this.updatingUserId = user.id;
+    this.pendingChange = null;
 
     this.userService.updateUserRole(user.id, { role: newRole }).subscribe({
       next: (updatedUser) => {
@@ -43,6 +56,10 @@ export class UserListComponent implements OnInit {
         this.toastService.show(error.message, 'error');
       }
     });
+  }
+
+  onCancelRoleChange(): void {
+    this.pendingChange = null;
   }
 
   private loadUsers(): void {
