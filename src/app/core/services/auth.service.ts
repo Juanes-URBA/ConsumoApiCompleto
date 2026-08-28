@@ -8,6 +8,7 @@ import { STORAGE_KEYS } from '../constants/storage-keys.constant';
 import { LoginRequest } from '../interfaces/login-request.interface';
 import { RegisterRequest } from '../interfaces/register-request.interface';
 import { AuthResponse } from '../interfaces/auth-response.interface';
+import { RefreshRequest } from '../interfaces/refresh-request.interface';
 import { User } from '../interfaces/user.interface';
 import { Role } from '../enums/role.enum';
 
@@ -33,10 +34,33 @@ export class AuthService {
     );
   }
 
-  logout(): void {
-    // La llamada a POST /api/auth/logout con el refreshToken
-    // se implementa en el Avance 3, junto con los interceptors.
-    this.clearSession();
+  logout(): Observable<void> {
+    const refreshToken = this.getRefreshToken();
+    const body: RefreshRequest = { refreshToken: refreshToken ?? '' };
+
+    return this.http.post<void>(`${this.apiUrl}/logout`, body).pipe(
+      tap(() => this.clearSession()),
+      catchError((error) => {
+        // Aunque falle en el backend, limpiamos la sesión localmente.
+        this.clearSession();
+        return this.handleError(error);
+      })
+    );
+  }
+
+  refreshToken(refreshToken: string): Observable<AuthResponse> {
+    const body: RefreshRequest = { refreshToken };
+
+    return this.http.post<AuthResponse>(`${this.apiUrl}/refresh`, body).pipe(
+      tap((response) => this.saveSession(response)),
+      catchError((error) => this.handleError(error))
+    );
+  }
+
+  getProfile(): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/me`).pipe(
+      catchError((error) => this.handleError(error))
+    );
   }
 
   saveSession(response: AuthResponse): void {
@@ -82,6 +106,9 @@ export class AuthService {
         break;
       case 401:
         friendlyMessage = 'Correo o contraseña incorrectos.';
+        break;
+      case 403:
+        friendlyMessage = 'No tienes permisos para realizar esta acción.';
         break;
       case 404:
         friendlyMessage = 'El servicio solicitado no existe.';
